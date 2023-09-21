@@ -1,46 +1,33 @@
 import tkinter as tk
 from PIL import Image, ImageTk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
-def get_input_text(data_list):
-    input_text = entry.get()
-    data_list.append(input_text)
-    print(data_list)
-    entry.delete(0, "end")
-
-data = []
-window = tk.Tk()
-window.title(" Body measurements tracker ")
-window.geometry("600x400")
-
-frame_ex = tk.Frame(window, borderwidth=2, relief="ridge")
-frame_ex.grid(row=0, column=0)  # Adjust padx and pady as needed
-
-# Add widgets to the frame (e.g., labels, buttons)
-label = tk.Label(frame_ex, text="This is a frame!")
-label.pack()
-
-entry = tk.Entry(frame_ex)
-entry.pack()
-
-button = tk.Button(frame_ex, text="Get Text", command=lambda: get_input_text(data))
-button.pack()
-
-frame_ex = tk.Frame(window, borderwidth=2, relief="ridge")
-frame_ex.grid(row=1, column=0)  # Adjust padx and pady as needed
-
-# Add widgets to the frame (e.g., labels, buttons)
-label = tk.Label(frame_ex, text="This is a frame!")
-label.pack()
-
-button = tk.Button(frame_ex, text="Click Me 2")
-button.pack()
-
-image = Image.open("Body.png")  # Replace with the image file's name
-img = ImageTk.PhotoImage(image)
-label = tk.Label(window, image=img)
-label.grid(row=0, column=1, rowspan=2)
+def get_entry_data(event):
+    entry_text = text1.get() 
+    text1.delete(0, "end")  
+    print(entry_text)
 
 
+# Initializing the window
+root = ttk.Window(themename="darkly")
+root.geometry("500x500")
+root.title("Body Measurments Tracker")
 
+frame1 = ttk.Frame()
+frame1.place(x=0, y=0, width=350, height=100)
+# Adding a label
+label1 = ttk.Label(frame1, text="Biceps:", bootstyle="succes")
+label1.place(x=0, y=0)
 
-window.mainloop()
+# Adding data entry 
+text1 = ttk.Entry(frame1,bootstyle="success")
+text1.insert(0, "40 cm")
+text1.place(x=0, y=50, width=200)
+text1.bind("<Return>", get_entry_data)
+
+# Adding a submit button
+extract_button = ttk.Button(frame1, text="Extract Data", command=lambda: get_entry_data(event=None), bootstyle=SUCCESS)
+extract_button.place(x=220,y=50, width=130)
+
+root.mainloop()
